@@ -69,3 +69,26 @@ Tạo pull request vào master
 Sau đó checkout master và pull từ remote về
 
 Sau đó xóa các branch đã xong
+
+2. Configuration
+
+Đầu tiên câu hỏi đặt ra là cấu hình ứng dụng chạy trên cổng nào, môi trường là gì, nếu cấu hình thêm database, aws s3,... thì nên cấu hình như thế nào?
+
+NestJs đề xuất [cách cấu hình](https://docs.nestjs.com/techniques/configuration)
+
+Thế nhưng nó quá khá phức tạp và không đáp ứng được các nhu cầu cơ bản trên
+
+Ví dụ: ![Khó để cấu hình cổng đơn giản](./assets/images/main-dotenv-questioningioning.png)
+![NestJs hướng dẫn cấu hình mongodb](./assets/images/how-nestjs-config-mongodb.png)
+
+Nên tôi quyết định sử dụng cách cũ và dễ dàng tiếp cận hơn:
+[Đọc thêm](https://medium.com/@datails/nestjs-keep-it-simple-stupid-4101d8bdf59c)
+
+Tôi tạo một thư mục và file như sau: configs/configs.ts
+Trong đó dùng dotenv để đọc file cấu hình đơn giản như sau:
+
+![Cấu hình đơn giản](./assets/images/how-i-configed-dotenv.png)
+
+Sau đó cấu hình cơ bản Swagger
+
+![Cơ bản swagger](./assets/images/swagger-configs.png)
