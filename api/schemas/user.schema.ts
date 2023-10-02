@@ -1,13 +1,14 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import { Account } from "./account/account.schema";
+import { genderEnum } from "enums/gender.enum";
 
 export type UserDocument = HydratedDocument<User>
 
 @Schema()
 export class User {
-  @Prop()
-  id: string;
+  // @Prop()
+  // id: string;
 
   @Prop()
   displayName: string;
@@ -18,13 +19,18 @@ export class User {
   @Prop()
   phoneNumber: string;
 
-  @Prop()
-  gender: string;
+  @Prop({ enum: genderEnum })
+  gender: genderEnum;
 
   @Prop()
   avatar: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Account'})
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Account',
+    unique: true,
+    immutable: false
+  })
   account: Account
 }
 

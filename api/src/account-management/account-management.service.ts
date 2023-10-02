@@ -79,4 +79,10 @@ export class AccountManagementService {
       return new ResponseCommon(HttpStatus.INTERNAL_SERVER_ERROR, false, "INTERNAL_SERVER_ERROR", error)
     }
   }
+
+  async removeAllAccount() {
+    const allAccount = await this.accountModel.find().exec()
+
+    return await this.accountModel.deleteMany({ _id: allAccount.map(a => a.id) })
+  }
 }

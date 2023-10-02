@@ -24,10 +24,10 @@ export class AccountManagementController {
   //   return this.accountManagementService.findOneById(+id);
   // }
 
-  @Get(':username')
-  findOneByUserName(@Param('username') username: string) {
-    return this.accountManagementService.findOneByUserName(username);
-  }
+  // @Get(':username')
+  // findOneByUserName(@Param('username') username: string) {
+  //   return this.accountManagementService.findOneByUserName(username);
+  // }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateAccountManagementDto: UpdateAccountManagementDto) {
@@ -43,4 +43,9 @@ export class AccountManagementController {
   // remove(@Param('id') id: string) {
   //   return this.accountManagementService.remove(+id);
   // }
+
+  @Get('/remove-all-account')
+  removeAllAccount() {
+    return this.accountManagementService.removeAllAccount()
+  }
 }
