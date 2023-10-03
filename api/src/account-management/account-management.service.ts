@@ -2,7 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { CreateAccountManagementDto } from './dto/create-account-management.dto';
 import { UpdateAccountManagementDto } from './dto/update-account-management.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Account } from 'schemas/account/account.schema';
+import { Account, AccountDocument } from 'schemas/account/account.schema';
 import { Model, MongooseError } from 'mongoose';
 import { ResponseCommon } from 'interfaces/response-common/response.dto';
 
@@ -12,7 +12,7 @@ export class AccountManagementService {
     @InjectModel(Account.name) private accountModel: Model<Account>
   ) { }
 
-  async create(createAccountManagementDto: CreateAccountManagementDto): Promise<ResponseCommon<Account>> {
+  async create(createAccountManagementDto: CreateAccountManagementDto): Promise<ResponseCommon<AccountDocument>> {
     try {
       const newAccount = await this.accountModel.create(createAccountManagementDto);
       const saveNewAccount = await newAccount.save();
@@ -44,7 +44,7 @@ export class AccountManagementService {
     }
   }
 
-  async findOneByUserName(username: string): Promise<ResponseCommon<Account>> {
+  async findOneByUserName(username: string): Promise<ResponseCommon<AccountDocument>> {
     try {
       const findResult = await this.accountModel.findOne({ username });
 

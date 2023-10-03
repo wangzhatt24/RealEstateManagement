@@ -10,6 +10,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'schemas/user.schema';
 import { Model } from 'mongoose';
 import { ResponseCommon } from 'interfaces/response-common/response.dto';
+import { Public } from 'common/decorators/is-public.decorator';
 
 @ApiTags("User Management")
 @Controller('user-management')
@@ -38,6 +39,7 @@ export class UserManagementController {
     return this.userManagementService.create(createUserManagementDto, avatar)
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.userManagementService.findAll();

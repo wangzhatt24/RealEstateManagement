@@ -3,6 +3,7 @@ import { AccountManagementService } from './account-management.service';
 import { CreateAccountManagementDto } from './dto/create-account-management.dto';
 import { UpdateAccountManagementDto } from './dto/update-account-management.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Public } from 'common/decorators/is-public.decorator';
 
 @ApiTags("Account Management")
 @Controller('account-management')
@@ -14,6 +15,7 @@ export class AccountManagementController {
     return this.accountManagementService.create(createAccountManagementDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.accountManagementService.findAll();

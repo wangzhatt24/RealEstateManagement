@@ -21,3 +21,10 @@ export const s3Configs = {
   bucket: process.env.AWS_BUCKET,
   baseURL: `https://s3batdongsan.s3.ap-southeast-1.amazonaws.com/`
 }
+
+export const jwtConstants = {
+  secret: process.env.JWT_SECRET,
+  expiresIn: process.env.JWT_ExpiresIn
+};
+
+console.log(jwtConstants)
