@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable, StreamableFile } from '@nestjs/common';
 import { CreateUserManagementDto } from './dto/create-user-management.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { ResponseCommon } from 'interfaces/response-common/response.dto';
+import { ResponseCommon } from 'common/interfaces/response-common/response.dto';
 import { Model } from 'mongoose';
 import { InjectS3, S3 } from 'nestjs-s3';
 import { User, UserDocument } from 'schemas/user.schema';

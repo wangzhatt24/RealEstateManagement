@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { ReportStateEnum } from "enums/report-state.enum";
+import { ReportStateEnum } from "common/enums/report-state.enum";
 import mongoose, { Date, HydratedDocument } from "mongoose";
 
 export type ReportStateDocument = HydratedDocument<ReportState>

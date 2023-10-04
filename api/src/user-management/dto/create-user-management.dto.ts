@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { genderEnum } from "enums/gender.enum";
+import { genderEnum } from "common/enums/gender.enum";
 import { Mongoose } from "mongoose";
 import { Account } from "schemas/account/account.schema";
 

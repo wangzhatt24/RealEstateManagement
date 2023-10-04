@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { PostStateEnum } from "enums/post-state.enum";
+import { PostStateEnum } from "common/enums/post-state.enum";
 import mongoose, { Date, HydratedDocument } from "mongoose";
 import { User } from "schemas/user.schema";
 import { Post } from "./post.schema";

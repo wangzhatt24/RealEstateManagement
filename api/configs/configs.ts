@@ -27,4 +27,12 @@ export const jwtConstants = {
   expiresIn: process.env.JWT_ExpiresIn
 };
 
-console.log(jwtConstants)
+console.log(`
+============================ENV===================================
+commonConfigs:   ${JSON.stringify(commonConfigs)}
+databaseConfigs: ${JSON.stringify(databaseConfigs)}
+avatarConfigs:   ${JSON.stringify(avatarConfigs)}
+s3Configs:       ${JSON.stringify(s3Configs)}
+jwtConstants:    ${JSON.stringify(jwtConstants)}
+============================END_ENV===============================
+`)

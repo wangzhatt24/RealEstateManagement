@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { RealEstateType } from "enums/real-estate-type.enum";
-import { saleOrRental } from "enums/sale-or-rental.enum";
+import { RealEstateType } from "common/enums/real-estate-type.enum";
+import { saleOrRental } from "common/enums/sale-or-rental.enum";
 import mongoose, { HydratedDocument } from "mongoose";
 import { Post } from "./post.schema";
 
