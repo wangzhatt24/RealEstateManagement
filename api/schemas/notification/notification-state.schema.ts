@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { notificationStateEnum } from "enums/notification-state.enum";
+import { notificationStateEnum } from "common/enums/notification-state.enum";
 import mongoose, { Date, HydratedDocument } from "mongoose";
 
 export type NotificationStateDocument = HydratedDocument<NotificationState>

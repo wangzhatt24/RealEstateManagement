@@ -4,7 +4,7 @@ import { UpdateAccountManagementDto } from './dto/update-account-management.dto'
 import { InjectModel } from '@nestjs/mongoose';
 import { Account, AccountDocument } from 'schemas/account/account.schema';
 import { Model, MongooseError } from 'mongoose';
-import { ResponseCommon } from 'interfaces/response-common/response.dto';
+import { ResponseCommon } from 'common/interfaces/response-common/response.dto';
 
 @Injectable()
 export class AccountManagementService {

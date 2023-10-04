@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import { Broker } from "./broker.schema";
-import { BrokerageFieldEnum } from "enums/broker-field.enum";
+import { BrokerageFieldEnum } from "common/enums/broker-field.enum";
 import { Location } from "../location/location.schema";
 
 export type BrokerageFieldDocument = HydratedDocument<BrokerageField>
