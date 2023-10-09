@@ -10,28 +10,27 @@ export class User {
   // @Prop()
   // id: string;
 
-  @Prop()
+  @Prop({ })
   displayName: string;
 
-  @Prop()
+  @Prop({ })
   address: string;
 
-  @Prop()
+  @Prop({ })
   phoneNumber: string;
 
-  @Prop({ enum: genderEnum })
+  @Prop({ enum: genderEnum, default: genderEnum.MALE })
   gender: genderEnum;
 
-  @Prop()
+  @Prop({ required: false })
   avatar: string;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Account',
-    unique: true,
-    immutable: false
+    required: false,
   })
-  account: Account
+  account: Account;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

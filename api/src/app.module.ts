@@ -11,7 +11,7 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(databaseConfigs.uri),
+    MongooseModule.forRoot(databaseConfigs.uri, { autoIndex: false }),
     S3Module.forRoot({
       config: {
         credentials: {

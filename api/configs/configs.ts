@@ -1,4 +1,7 @@
+import { genderEnum } from "common/enums/gender.enum";
 import "dotenv/config";
+import { Account } from "schemas/account/account.schema";
+import { User } from "schemas/user.schema";
 
 export const commonConfigs = {
   nodeEnv: process.env.NODE_ENV,
@@ -26,6 +29,15 @@ export const jwtConstants = {
   secret: process.env.JWT_SECRET,
   expiresIn: process.env.JWT_ExpiresIn
 };
+
+export const defaultUser: User = {
+  displayName: 'default',
+  address: 'default',
+  phoneNumber: 'default',
+  gender: genderEnum.MALE,
+  avatar: null,
+  account: undefined
+}
 
 console.log(`
 ============================ENV===================================
