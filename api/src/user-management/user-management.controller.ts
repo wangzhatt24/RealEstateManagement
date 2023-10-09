@@ -10,7 +10,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'schemas/user.schema';
 import { Model } from 'mongoose';
 import { ResponseCommon } from 'common/interfaces/response-common/response.dto';
+import { Public } from 'common/decorators/public.decorator';
 
+@Public()
 @ApiTags("User Management")
 @Controller('user-management')
 export class UserManagementController {
@@ -20,7 +22,6 @@ export class UserManagementController {
 
   @Get('user-avatar/:id')
   getUserAvatar(@Param('id') id: string) {
-    console.log(id)
     return this.userManagementService.getUserAvatar(id)
   }
 

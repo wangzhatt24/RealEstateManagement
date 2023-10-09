@@ -5,25 +5,37 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Account, AccountDocument } from 'schemas/account/account.schema';
 import { Model, MongooseError } from 'mongoose';
 import { ResponseCommon } from 'common/interfaces/response-common/response.dto';
+import { User } from 'schemas/user.schema';
+import { defaultUser } from 'configs/configs';
 
 @Injectable()
 export class AccountManagementService {
   constructor(
-    @InjectModel(Account.name) private accountModel: Model<Account>
+    @InjectModel(Account.name) private accountModel: Model<Account>,
+    @InjectModel(User.name) private userModel: Model<User>
   ) { }
 
-  async create(createAccountManagementDto: CreateAccountManagementDto): Promise<ResponseCommon<AccountDocument>> {
+  async create(dto: CreateAccountManagementDto): Promise<ResponseCommon<any>> {
     try {
-      const newAccount = await this.accountModel.create(createAccountManagementDto);
+      // tạo account mới
+      const newAccount = new this.accountModel(dto)
+
+      // tạo user mới
+      const newUser = new this.userModel({ ...defaultUser, account: newAccount })
+
+      // Lưu account
       const saveNewAccount = await newAccount.save();
 
+      // Lưu user
+      const saveNewUser = await newUser.save();
+
       /**
-       * Lưu và bắt lỗi lưu nếu có
+       * Bắt lỗi lưu nếu có
        */
-      if (saveNewAccount) {
-        return new ResponseCommon(HttpStatus.OK, true, "SUCCESS", saveNewAccount)
+      if (saveNewAccount && saveNewUser) {
+        return new ResponseCommon(HttpStatus.OK, true, "SUCCESS", saveNewAccount.toJSON)
       } else {
-        return new ResponseCommon(HttpStatus.INTERNAL_SERVER_ERROR, false, "INTERNAL_SERVER_ERROR")
+        return new ResponseCommon(HttpStatus.INTERNAL_SERVER_ERROR, false, "INTERNAL_SERVER_ERROR_CUSTOM")
       }
     } catch (error) {
       return new ResponseCommon(500, false, "INTERNAL_SERVER_ERROR", error)
@@ -46,8 +58,7 @@ export class AccountManagementService {
 
   async findOneByUserName(username: string): Promise<ResponseCommon<AccountDocument>> {
     try {
-      const findResult = await this.accountModel.findOne({ username });
-
+      const findResult = await this.accountModel.findOne({ username: username });
       if (findResult) {
         return new ResponseCommon(HttpStatus.OK, true, "SUCCESS", findResult)
       } else {

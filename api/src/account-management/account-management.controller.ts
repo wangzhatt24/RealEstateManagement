@@ -3,7 +3,9 @@ import { AccountManagementService } from './account-management.service';
 import { CreateAccountManagementDto } from './dto/create-account-management.dto';
 import { UpdateAccountManagementDto } from './dto/update-account-management.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Public } from 'common/decorators/public.decorator';
 
+@Public()
 @ApiTags("Account Management")
 @Controller('account-management')
 export class AccountManagementController {
@@ -24,7 +26,7 @@ export class AccountManagementController {
   //   return this.accountManagementService.findOneById(+id);
   // }
 
-  // @Get(':username')
+  // @Get('/account/:username')
   // findOneByUserName(@Param('username') username: string) {
   //   return this.accountManagementService.findOneByUserName(username);
   // }
