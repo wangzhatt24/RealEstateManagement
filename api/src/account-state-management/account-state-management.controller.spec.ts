@@ -11,7 +11,9 @@ describe('AccountStateManagementController', () => {
       providers: [AccountStateManagementService],
     }).compile();
 
-    controller = module.get<AccountStateManagementController>(AccountStateManagementController);
+    controller = module.get<AccountStateManagementController>(
+      AccountStateManagementController,
+    );
   });
 
   it('should be defined', () => {

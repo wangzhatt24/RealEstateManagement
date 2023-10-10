@@ -8,21 +8,21 @@ import { AccountManagementService } from 'src/account-management/account-managem
 export class AuthService {
   constructor(
     private accountService: AccountManagementService,
-    private jwtService: JwtService
-  ) { }
+    private jwtService: JwtService,
+  ) {}
 
   async signIn(username: string, pass: string): Promise<any> {
-    const findAccount = await this.accountService.findOneByUserName(username)
+    const findAccount = await this.accountService.findOneByUserName(username);
 
-    if(findAccount.success === false) {
+    if (findAccount.success === false) {
       return new ResponseCommon(
         HttpStatus.INTERNAL_SERVER_ERROR,
         false,
-        "INCORRECT_USERNAME_OR_PASSWORD",
-      )
+        'INCORRECT_USERNAME_OR_PASSWORD',
+      );
     }
 
-    const account = findAccount.data
+    const account = findAccount.data;
 
     if (account?.password !== pass) {
       throw new UnauthorizedException();
@@ -31,11 +31,11 @@ export class AuthService {
     const payload: AccountPayload = {
       accountId: account.id,
       username: account.username,
-      isAdmin: account.isAdmin
-    }
+      isAdmin: account.isAdmin,
+    };
 
     return {
-      access_token: await this.jwtService.signAsync(payload)
-    }
+      access_token: await this.jwtService.signAsync(payload),
+    };
   }
 }

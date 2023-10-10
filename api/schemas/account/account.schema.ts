@@ -18,12 +18,12 @@ export class Account {
   @Prop({ required: true, default: false, immutable: true })
   isAdmin: boolean;
 
-  // @Prop({
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'User',
-  //   required: false
-  // })
-  // user: User;
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: false
+  })
+  user: User;
 }
 
 export const AccountSchema = SchemaFactory.createForClass(Account)

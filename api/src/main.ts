@@ -20,7 +20,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document);
 
-
   await app.listen(commonConfigs.port || 3000);
 
   console.log(`
@@ -28,6 +27,6 @@ async function bootstrap() {
   Server is listening on: ${await app.getUrl()}
   Api docs:               ${await app.getUrl()}/api-docs
   -----------------------------------------------
-  `)
+  `);
 }
 bootstrap();

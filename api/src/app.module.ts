@@ -16,15 +16,15 @@ import { AuthModule } from './auth/auth.module';
       config: {
         credentials: {
           accessKeyId: s3Configs.accessKeyId,
-          secretAccessKey: s3Configs.secretAccessKey
+          secretAccessKey: s3Configs.secretAccessKey,
         },
-        region: s3Configs.region
-      }
+        region: s3Configs.region,
+      },
     }),
     AccountManagementModule,
     UserManagementModule,
     AccountStateManagementModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

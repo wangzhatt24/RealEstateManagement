@@ -9,7 +9,9 @@ describe('AccountStateManagementService', () => {
       providers: [AccountStateManagementService],
     }).compile();
 
-    service = module.get<AccountStateManagementService>(AccountStateManagementService);
+    service = module.get<AccountStateManagementService>(
+      AccountStateManagementService,
+    );
   });
 
   it('should be defined', () => {

@@ -1,16 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AccountStateManagementService } from './account-state-management.service';
 import { CreateAccountStateManagementDto } from './dto/create-account-state-management.dto';
 import { UpdateAccountStateManagementDto } from './dto/update-account-state-management.dto';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 
-@ApiTags("Account State Management")
+@ApiTags('Account State Management')
 @Controller('account-state-management')
 export class AccountStateManagementController {
-  constructor(private readonly accountStateManagementService: AccountStateManagementService) {}
+  constructor(
+    private readonly accountStateManagementService: AccountStateManagementService,
+  ) {}
 
   @Post()
-  @ApiConsumes("multipart/form-data")
+  @ApiConsumes('multipart/form-data')
   create(@Body() dto: CreateAccountStateManagementDto) {
     return this.accountStateManagementService.create(dto);
   }
@@ -26,8 +36,14 @@ export class AccountStateManagementController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAccountStateManagementDto: UpdateAccountStateManagementDto) {
-    return this.accountStateManagementService.update(+id, updateAccountStateManagementDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateAccountStateManagementDto: UpdateAccountStateManagementDto,
+  ) {
+    return this.accountStateManagementService.update(
+      +id,
+      updateAccountStateManagementDto,
+    );
   }
 
   @Delete(':id')

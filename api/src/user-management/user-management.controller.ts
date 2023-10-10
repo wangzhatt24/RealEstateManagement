@@ -1,4 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  UploadedFile,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator,
+  HttpStatus,
+} from '@nestjs/common';
 import { UserManagementService } from './user-management.service';
 import { CreateUserManagementDto } from './dto/create-user-management.dto';
 import { UpdateUserManagementDto } from './dto/update-user-management.dto';
@@ -13,30 +27,32 @@ import { ResponseCommon } from 'common/interfaces/response-common/response.dto';
 import { Public } from 'common/decorators/public.decorator';
 
 @Public()
-@ApiTags("User Management")
+@ApiTags('User Management')
 @Controller('user-management')
 export class UserManagementController {
-  constructor(
-    private readonly userManagementService: UserManagementService
-  ) { }
+  constructor(private readonly userManagementService: UserManagementService) {}
 
   @Get('user-avatar/:id')
   getUserAvatar(@Param('id') id: string) {
-    return this.userManagementService.getUserAvatar(id)
+    return this.userManagementService.getUserAvatar(id);
   }
 
   @Post()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('avatar'))
-  create(@Body() createUserManagementDto: CreateUserManagementDto, @UploadedFile(
-    new ParseFilePipe({
-      validators: [
-        new MaxFileSizeValidator({ maxSize: avatarConfigs.maxSize }),
-        new FileTypeValidator({ fileType: avatarConfigs.fileTypeRegex })
-      ]
-    })
-  ) avatar: Express.Multer.File) {
-    return this.userManagementService.create(createUserManagementDto, avatar)
+  create(
+    @Body() createUserManagementDto: CreateUserManagementDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: avatarConfigs.maxSize }),
+          new FileTypeValidator({ fileType: avatarConfigs.fileTypeRegex }),
+        ],
+      }),
+    )
+    avatar: Express.Multer.File,
+  ) {
+    return this.userManagementService.create(createUserManagementDto, avatar);
   }
 
   @Get()

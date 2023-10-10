@@ -1,6 +1,6 @@
-import { Prop } from "@nestjs/mongoose";
-import { ApiProperty } from "@nestjs/swagger";
-import { Account } from "schemas/account/account.schema";
+import { Prop } from '@nestjs/mongoose';
+import { ApiProperty } from '@nestjs/swagger';
+import { Account } from 'schemas/account/account.schema';
 
 export class CreateAccountStateManagementDto {
   // id: string;

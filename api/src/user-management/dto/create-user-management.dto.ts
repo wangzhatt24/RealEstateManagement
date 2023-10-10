@@ -1,7 +1,7 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { genderEnum } from "common/enums/gender.enum";
-import { Mongoose } from "mongoose";
-import { Account } from "schemas/account/account.schema";
+import { ApiProperty } from '@nestjs/swagger';
+import { genderEnum } from 'common/enums/gender.enum';
+import { Mongoose } from 'mongoose';
+import { Account } from 'schemas/account/account.schema';
 
 export class CreateUserManagementDto {
   @ApiProperty()
@@ -16,7 +16,7 @@ export class CreateUserManagementDto {
   @ApiProperty({ enum: genderEnum })
   gender: genderEnum;
 
-  @ApiProperty({  type: 'string', format: 'binary' })
+  @ApiProperty({ type: 'string', format: 'binary' })
   avatar: Express.Multer.File;
 
   @ApiProperty({ required: true, type: 'string' })

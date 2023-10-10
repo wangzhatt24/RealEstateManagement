@@ -8,8 +8,9 @@ import { Model } from 'mongoose';
 @Injectable()
 export class AccountStateManagementService {
   constructor(
-    @InjectModel(AccountState.name) private accountStateModel: Model<AccountState>
-  ) { }
+    @InjectModel(AccountState.name)
+    private accountStateModel: Model<AccountState>,
+  ) {}
 
   create(dto: CreateAccountStateManagementDto) {
     // return this.
@@ -23,7 +24,10 @@ export class AccountStateManagementService {
     return `This action returns a #${id} accountStateManagement`;
   }
 
-  update(id: number, updateAccountStateManagementDto: UpdateAccountStateManagementDto) {
+  update(
+    id: number,
+    updateAccountStateManagementDto: UpdateAccountStateManagementDto,
+  ) {
     return `This action updates a #${id} accountStateManagement`;
   }
 
