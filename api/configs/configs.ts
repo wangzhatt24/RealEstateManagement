@@ -55,6 +55,10 @@ export const adminAccount: Account = {
   user: adminUser
 }
 
+export const bcryptConfigs = {
+  saltRounds: Number(process.env.SALT_ROUNDS)
+}
+
 console.log(`
 ============================ENV===================================
 commonConfigs:   ${JSON.stringify(commonConfigs)}
@@ -63,5 +67,6 @@ avatarConfigs:   ${JSON.stringify(avatarConfigs)}
 s3Configs:       ${JSON.stringify(s3Configs)}
 jwtConstants:    ${JSON.stringify(jwtConstants)}
 adminAccount:    ${JSON.stringify(adminAccount)}
+bcryptConfigs:  ${JSON.stringify(bcryptConfigs)}
 ============================END_ENV===============================
 `)

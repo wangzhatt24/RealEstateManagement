@@ -8,6 +8,9 @@ import { UserManagementModule } from './user-management/user-management.module';
 import { S3Module } from 'nestjs-s3';
 import { AccountStateManagementModule } from './account-state-management/account-state-management.module';
 import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from 'common/guards/role.guard';
+import { AuthGuard } from './auth/guards/auth.guard';
 
 @Module({
   imports: [
@@ -27,6 +30,13 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService, {
+      provide: APP_GUARD,
+      useClass: AuthGuard
+    }, {
+      provide: APP_GUARD,
+      useClass: RolesGuard
+    }],
 })
-export class AppModule {}
+export class AppModule { }
