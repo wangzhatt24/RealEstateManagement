@@ -8,12 +8,12 @@ import { User, UserSchema } from 'schemas/user.schema';
 @Module({
   imports: [
     MongooseModule.forFeature([
-      {name: Account.name, schema: AccountSchema},
-      {name: User.name, schema: UserSchema}
-    ])
+      { name: Account.name, schema: AccountSchema },
+      { name: User.name, schema: UserSchema },
+    ]),
   ],
   controllers: [AccountManagementController],
   providers: [AccountManagementService],
-  exports: [AccountManagementService]
+  exports: [AccountManagementService],
 })
 export class AccountManagementModule {}

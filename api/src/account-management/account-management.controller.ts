@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AccountManagementService } from './account-management.service';
 import { CreateAccountManagementDto } from './dto/create-account-management.dto';
 import { UpdateAccountManagementDto } from './dto/update-account-management.dto';
@@ -6,10 +14,18 @@ import { ApiTags } from '@nestjs/swagger';
 import { Public } from 'common/decorators/public.decorator';
 
 @Public()
-@ApiTags("Account Management")
+@ApiTags('Account Management')
 @Controller('account-management')
 export class AccountManagementController {
-  constructor(private readonly accountManagementService: AccountManagementService) {}
+  constructor(
+    private readonly accountManagementService: AccountManagementService,
+  ) {
+    this.seedAdmin()
+  }
+
+  seedAdmin() {
+    return this.accountManagementService.createAdminAccount()
+  }
 
   @Post()
   create(@Body() createAccountManagementDto: CreateAccountManagementDto) {
@@ -37,8 +53,14 @@ export class AccountManagementController {
   // }
 
   @Patch(':username')
-  updateAccountByUserName(@Param('username') username: string, @Body() UpdateAccountManagementDto: UpdateAccountManagementDto) {
-    return this.accountManagementService.updateAccountByUserName(username, UpdateAccountManagementDto)
+  updateAccountByUserName(
+    @Param('username') username: string,
+    @Body() UpdateAccountManagementDto: UpdateAccountManagementDto,
+  ) {
+    return this.accountManagementService.updateAccountByUserName(
+      username,
+      UpdateAccountManagementDto,
+    );
   }
 
   // @Delete(':id')
@@ -48,6 +70,6 @@ export class AccountManagementController {
 
   @Get('/remove-all-account')
   removeAllAccount() {
-    return this.accountManagementService.removeAllAccount()
+    return this.accountManagementService.removeAllAccount();
   }
 }

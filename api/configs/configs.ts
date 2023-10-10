@@ -39,6 +39,22 @@ export const defaultUser: User = {
   account: undefined
 }
 
+export const adminUser: User = {
+  displayName: process.env.SEED_ADMIN_DISPLAY_NAME,
+  phoneNumber: process.env.SEED_ADMIN_PHONE_NUMBER,
+  gender: genderEnum.MALE,
+  avatar: process.env.SEED_ADMIN_AVATAR,
+  address: process.env.SEED_ADMIN_ADDRESS,
+  account: undefined
+}
+
+export const adminAccount: Account = {
+  username: process.env.SEED_ADMIN_USERNAME,
+  password: process.env.SEED_ADMIN_PASSWORD,
+  isAdmin: Boolean(process.env.SEED_ADMIN_IS_ADMIN),
+  user: adminUser
+}
+
 console.log(`
 ============================ENV===================================
 commonConfigs:   ${JSON.stringify(commonConfigs)}
@@ -46,5 +62,6 @@ databaseConfigs: ${JSON.stringify(databaseConfigs)}
 avatarConfigs:   ${JSON.stringify(avatarConfigs)}
 s3Configs:       ${JSON.stringify(s3Configs)}
 jwtConstants:    ${JSON.stringify(jwtConstants)}
+adminAccount:    ${JSON.stringify(adminAccount)}
 ============================END_ENV===============================
 `)
