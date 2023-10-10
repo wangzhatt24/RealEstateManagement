@@ -3,6 +3,8 @@ import { JwtService } from '@nestjs/jwt';
 import AccountPayload from 'common/interfaces/account-payload/account.payload';
 import { ResponseCommon } from 'common/interfaces/response-common/response.dto';
 import { AccountManagementService } from 'src/account-management/account-management.service';
+import * as bcrypt from 'bcrypt'
+import { bcryptConfigs } from 'configs/configs';
 
 @Injectable()
 export class AuthService {
@@ -23,8 +25,8 @@ export class AuthService {
     }
 
     const account = findAccount.data;
-
-    if (account?.password !== pass) {
+    
+    if(!await bcrypt.compare(pass, account?.password)) {
       throw new UnauthorizedException();
     }
 

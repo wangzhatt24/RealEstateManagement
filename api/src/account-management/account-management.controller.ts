@@ -6,14 +6,20 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { AccountManagementService } from './account-management.service';
 import { CreateAccountManagementDto } from './dto/create-account-management.dto';
 import { UpdateAccountManagementDto } from './dto/update-account-management.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Public } from 'common/decorators/public.decorator';
+import { Roles } from 'common/decorators/role.decorator';
+import { Role } from 'common/enums/role.enum';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { RolesGuard } from 'common/guards/role.guard';
 
-@Public()
+// @Public()
+@ApiBearerAuth()
 @ApiTags('Account Management')
 @Controller('account-management')
 export class AccountManagementController {
@@ -27,12 +33,14 @@ export class AccountManagementController {
     return this.accountManagementService.createAdminAccount()
   }
 
+  @Public()
   @Post()
   create(@Body() createAccountManagementDto: CreateAccountManagementDto) {
     return this.accountManagementService.create(createAccountManagementDto);
   }
 
   @Get()
+  @Roles(Role.Admin)
   findAll() {
     return this.accountManagementService.findAll();
   }
