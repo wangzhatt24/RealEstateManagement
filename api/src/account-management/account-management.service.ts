@@ -6,11 +6,14 @@ import { Account, AccountDocument } from 'schemas/account/account.schema';
 import { Model, MongooseError } from 'mongoose';
 import { ResponseCommon } from 'common/interfaces/response-common/response.dto';
 import { User } from 'schemas/user.schema';
-import { adminAccount, defaultUser, adminUser, defaultAccountState } from 'configs/configs';
+import { adminAccount, defaultUser, adminUser, defaultAccountState, bcryptConfigs } from 'configs/configs';
 import { AccountState } from 'schemas/account/account-state.schema';
 import ObjectIdDetecter from 'common/utils/object-id-mongoose-detec.util';
 import { AuthService } from 'src/auth/auth.service';
 import UpdatePasswordDto from './dto/update-password.dto';
+import { UpdatePasswordByAccountIdDto } from './dto/update-password-by-id.dto';
+import * as bcrypt from 'bcrypt'
+
 
 @Injectable()
 export class AccountManagementService {
@@ -207,13 +210,32 @@ export class AccountManagementService {
     }
   }
 
-  async updateAccountById(
-    id: string,
-    dto: UpdateAccountManagementDto,
-  ) {
-    return 'not implement yet';
+  // forgot password
+  async updatePasswordByAccountId(dto: UpdatePasswordByAccountIdDto) {
+    try {
+      const findAccount = await this.findOneByIdOrUsername(dto.id);
+
+      const account = findAccount.data;
+      
+      if (!await bcrypt.compare(dto.oldPassword, account.password)) {
+        return new ResponseCommon(HttpStatus.CONFLICT, false, "PASSWORD_INCORRECT");
+      }
+
+      account.password = dto.newPassword;
+
+      const updatePassword = await account.save();
+
+      if (updatePassword) {
+        return new ResponseCommon(HttpStatus.OK, true, "PASSWORD_UPDATED_SUCCESSFULLY")
+      } else {
+        return new ResponseCommon(HttpStatus.INTERNAL_SERVER_ERROR, false, "INTERNAL_SERVER_ERROR")
+      }
+    } catch (error) {
+      return new ResponseCommon(HttpStatus.INTERNAL_SERVER_ERROR, false, "INTERNAL_SERVER_ERROR", error)
+    }
   }
 
+  //update forgot password
   async updateAccountByUserName(
     username: string,
     dto: UpdateAccountManagementDto,
