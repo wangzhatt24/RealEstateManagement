@@ -4,6 +4,7 @@ import {
   Post,
   Body,
   Param,
+  Patch,
 } from '@nestjs/common';
 import { AccountManagementService } from './account-management.service';
 import { CreateAccountManagementDto } from './dto/create-account-management.dto';
@@ -12,6 +13,7 @@ import { Public } from 'common/decorators/public.decorator';
 import { Roles } from 'common/decorators/role.decorator';
 import { Role } from 'common/enums/role.enum';
 import UpdatePasswordDto from './dto/update-password.dto';
+import { UpdatePasswordByAccountIdDto } from './dto/update-password-by-id.dto';
 
 @Public()
 @ApiBearerAuth()
@@ -45,10 +47,10 @@ export class AccountManagementController {
     return this.accountManagementService.findOneByIdOrUsername(idOrUsername);
   }
 
-  // @Patch('update-account/:id')
-  // update(@Param('id') id: string, @Body() dto: UpdateAccountManagementDto) {
-  //   return this.accountManagementService.updateAccountById(id, dto);
-  // }
+  @Patch('update-account/')
+  update(@Body() dto: UpdatePasswordByAccountIdDto) {
+    return this.accountManagementService.updatePasswordByAccountId(dto);
+  }
 
   @Public()
   @Post('update-password-forgot')

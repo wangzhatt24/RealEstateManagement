@@ -8,7 +8,6 @@ import * as bcrypt from 'bcrypt'
 import { bcryptConfigs } from 'configs/configs';
 import { AccountState, AccountStateSchema } from 'schemas/account/account-state.schema';
 import { AuthModule } from 'src/auth/auth.module';
-import { async } from 'rxjs';
 
 @Module({
   imports: [
