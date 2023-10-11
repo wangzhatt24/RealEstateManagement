@@ -5,18 +5,14 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
-  UseGuards,
 } from '@nestjs/common';
 import { AccountManagementService } from './account-management.service';
 import { CreateAccountManagementDto } from './dto/create-account-management.dto';
-import { UpdateAccountManagementDto } from './dto/update-account-management.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Public } from 'common/decorators/public.decorator';
 import { Roles } from 'common/decorators/role.decorator';
 import { Role } from 'common/enums/role.enum';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { RolesGuard } from 'common/guards/role.guard';
+import { UpdateAccountManagementDto } from './dto/update-account-management.dto';
 
 // @Public()
 @ApiBearerAuth()
@@ -34,46 +30,30 @@ export class AccountManagementController {
   }
 
   @Public()
-  @Post()
-  create(@Body() createAccountManagementDto: CreateAccountManagementDto) {
-    return this.accountManagementService.create(createAccountManagementDto);
+  @Post('create-account')
+  create(@Body() dto: CreateAccountManagementDto) {
+    return this.accountManagementService.create(dto);
   }
 
-  @Get()
+  @Get('all-account')
   @Roles(Role.Admin)
   findAll() {
     return this.accountManagementService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.accountManagementService.findOneById(+id);
-  // }
-
-  // @Get('/account/:username')
-  // findOneByUserName(@Param('username') username: string) {
-  //   return this.accountManagementService.findOneByUserName(username);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateAccountManagementDto: UpdateAccountManagementDto) {
-  //   return this.accountManagementService.updateAccountById(+id, updateAccountManagementDto);
-  // }
-
-  @Patch(':username')
-  updateAccountByUserName(
-    @Param('username') username: string,
-    @Body() UpdateAccountManagementDto: UpdateAccountManagementDto,
-  ) {
-    return this.accountManagementService.updateAccountByUserName(
-      username,
-      UpdateAccountManagementDto,
-    );
+  @Get('account/:idOrUsername')
+  findOne(@Param('idOrUsername') idOrUsername: string) {
+    return this.accountManagementService.findOneByIdOrUsername(idOrUsername);
   }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.accountManagementService.remove(+id);
+  // @Patch('update-account/:id')
+  // update(@Param('id') id: string, @Body() dto: UpdateAccountManagementDto) {
+  //   return this.accountManagementService.updateAccountById(id, dto);
+  // }
+
+  // @Post('lock-account/:id')
+  // lockAccount(@Param('id') id: string) {
+  //   // return this.accountManagementService.(id);
   // }
 
   @Get('/remove-all-account')

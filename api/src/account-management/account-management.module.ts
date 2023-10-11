@@ -6,6 +6,7 @@ import { Account, AccountSchema } from 'schemas/account/account.schema';
 import { User, UserSchema } from 'schemas/user.schema';
 import * as bcrypt from 'bcrypt'
 import { bcryptConfigs } from 'configs/configs';
+import { AccountState, AccountStateSchema } from 'schemas/account/account-state.schema';
 
 @Module({
   imports: [
@@ -25,6 +26,12 @@ import { bcryptConfigs } from 'configs/configs';
           return schema;
         }
       },
+      {
+        name: AccountState.name, useFactory: () => {
+          const schema = AccountStateSchema;
+          return schema;
+        }
+      }
     ]),
   ],
   controllers: [AccountManagementController],

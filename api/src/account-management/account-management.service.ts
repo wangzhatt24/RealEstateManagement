@@ -6,20 +6,23 @@ import { Account, AccountDocument } from 'schemas/account/account.schema';
 import { Model, MongooseError } from 'mongoose';
 import { ResponseCommon } from 'common/interfaces/response-common/response.dto';
 import { User } from 'schemas/user.schema';
-import { adminAccount, defaultUser, adminUser } from 'configs/configs';
+import { adminAccount, defaultUser, adminUser, defaultAccountState } from 'configs/configs';
+import { AccountState } from 'schemas/account/account-state.schema';
+import ObjectIdDetecter from 'common/utils/object-id-mongoose-detec.util';
 
 @Injectable()
 export class AccountManagementService {
   constructor(
     @InjectModel(Account.name) private accountModel: Model<Account>,
     @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(AccountState.name) private accountStateModel: Model<AccountState>
   ) { }
 
   async createAdminAccount(): Promise<any> {
     try {
       const findAdmin = await this.accountModel.find({ isAdmin: true })
 
-      if(findAdmin.length !== 0) {
+      if (findAdmin.length !== 0) {
         console.log(`Admin Seeded`);
         return true;
       }
@@ -33,8 +36,18 @@ export class AccountManagementService {
         account: newAccount,
       });
 
+      // tạo account state
+      const newAccountState = new this.accountStateModel({
+        lockedReason: defaultAccountState.executor,
+        executor: newAccount,
+        target: newAccount
+      })
+
       // Gán user này cho account
       newAccount.user = newUser;
+
+      // Gán account state này cho account
+      newAccount.accountState = newAccountState;
 
       // Lưu account
       const saveNewAccount = await newAccount.save();
@@ -42,10 +55,13 @@ export class AccountManagementService {
       // Lưu user
       const saveNewUser = await newUser.save();
 
+      // Lưu account state
+      const saveNewAccountState = await newAccountState.save();
+
       /**
        * Bắt lỗi lưu nếu có
        */
-      if (saveNewAccount && saveNewUser) {
+      if (saveNewAccount && saveNewUser && saveNewAccountState) {
         console.log(`Admin Seeded`)
       } else {
         return new ResponseCommon(500, false, 'ADMIN_SEEDING_FAILED');
@@ -66,8 +82,18 @@ export class AccountManagementService {
         account: newAccount,
       });
 
+      // tạo account state mới
+      const newAccountState = new this.accountStateModel({
+        lockedReason: defaultAccountState.lockedReason,
+        executor: newAccount,
+        target: newAccount
+      })
+
       // Gán user này cho account
       newAccount.user = newUser;
+
+      // gán account state này cho account
+      newAccount.accountState = newAccountState;
 
       // Lưu account
       const saveNewAccount = await newAccount.save();
@@ -75,16 +101,19 @@ export class AccountManagementService {
       // Lưu user
       const saveNewUser = await newUser.save();
 
+      // Lưu account state
+      const saveNewAccountState = await newAccountState.save()
+
       /**
        * Bắt lỗi lưu nếu có
        */
-      if (saveNewAccount && saveNewUser) {
+      if (saveNewAccount && saveNewUser && saveNewAccountState) {
         return new ResponseCommon(HttpStatus.OK, true, 'SUCCESS');
       } else {
         return new ResponseCommon(
           HttpStatus.INTERNAL_SERVER_ERROR,
           false,
-          'INTERNAL_SERVER_ERROR_CUSTOM',
+          'INTERNAL_SERVER_ERROR',
         );
       }
     } catch (error) {
@@ -94,7 +123,7 @@ export class AccountManagementService {
 
   async findAll(): Promise<ResponseCommon<Account[]>> {
     try {
-      const findAll = await this.accountModel.find().populate('user').exec();
+      const findAll = await this.accountModel.find().populate(['user', 'accountState']).exec();
 
       if (findAll) {
         return new ResponseCommon(HttpStatus.OK, true, 'SUCCESS', findAll);
@@ -115,13 +144,24 @@ export class AccountManagementService {
     }
   }
 
-  async findOneByUserName(
-    username: string,
+  async findOneByIdOrUsername(
+    idOrUsername: string,
   ): Promise<ResponseCommon<AccountDocument>> {
     try {
-      const findResult = await this.accountModel.findOne({
-        username: username,
-      });
+      let findResult = undefined;
+
+      if(ObjectIdDetecter(idOrUsername)) {
+        // is id
+        findResult = await this.accountModel.findOne({
+          _id: idOrUsername,
+        }).populate('user').populate('accountState').exec();
+      } else {
+        // is username
+        findResult = await this.accountModel.findOne({
+          username: idOrUsername,
+        }).populate('user').populate('accountState').exec();
+      }
+      
       if (findResult) {
         return new ResponseCommon(HttpStatus.OK, true, 'SUCCESS', findResult);
       } else {
@@ -142,8 +182,8 @@ export class AccountManagementService {
   }
 
   async updateAccountById(
-    id: number,
-    updateAccountManagementDto: UpdateAccountManagementDto,
+    id: string,
+    dto: UpdateAccountManagementDto,
   ) {
     return 'not implement yet';
   }
