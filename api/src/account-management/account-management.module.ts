@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { AccountManagementService } from './account-management.service';
 import { AccountManagementController } from './account-management.controller';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -7,6 +7,8 @@ import { User, UserSchema } from 'schemas/user.schema';
 import * as bcrypt from 'bcrypt'
 import { bcryptConfigs } from 'configs/configs';
 import { AccountState, AccountStateSchema } from 'schemas/account/account-state.schema';
+import { AuthModule } from 'src/auth/auth.module';
+import { async } from 'rxjs';
 
 @Module({
   imports: [
@@ -33,6 +35,7 @@ import { AccountState, AccountStateSchema } from 'schemas/account/account-state.
         }
       }
     ]),
+    forwardRef(() => AuthModule)
   ],
   controllers: [AccountManagementController],
   providers: [AccountManagementService],

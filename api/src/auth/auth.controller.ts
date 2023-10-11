@@ -12,6 +12,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Public } from 'common/decorators/public.decorator';
 import { CurrentAccount } from 'common/decorators/current-account.decorator';
+import ForgotPasswordDto from './dto/forgot-password.dto';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -22,6 +23,12 @@ export class AuthController {
   @Post('login')
   signIn(@Body() dto: SignInDto) {
     return this.authService.signIn(dto.username, dto.password);
+  }
+
+  @Public()
+  @Post('forgot-password')
+  forgotPassword(@Body() dto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(dto.email);
   }
 
   @ApiBearerAuth()

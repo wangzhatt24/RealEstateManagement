@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Inject, Injectable, UnauthorizedException, forwardRef } from '@nestjs/common';
 import { CreateAccountManagementDto } from './dto/create-account-management.dto';
 import { UpdateAccountManagementDto } from './dto/update-account-management.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -9,13 +9,16 @@ import { User } from 'schemas/user.schema';
 import { adminAccount, defaultUser, adminUser, defaultAccountState } from 'configs/configs';
 import { AccountState } from 'schemas/account/account-state.schema';
 import ObjectIdDetecter from 'common/utils/object-id-mongoose-detec.util';
+import { AuthService } from 'src/auth/auth.service';
+import UpdatePasswordDto from './dto/update-password.dto';
 
 @Injectable()
 export class AccountManagementService {
   constructor(
     @InjectModel(Account.name) private accountModel: Model<Account>,
     @InjectModel(User.name) private userModel: Model<User>,
-    @InjectModel(AccountState.name) private accountStateModel: Model<AccountState>
+    @InjectModel(AccountState.name) private accountStateModel: Model<AccountState>,
+    @Inject(forwardRef(() => AuthService)) private authService: AuthService
   ) { }
 
   async createAdminAccount(): Promise<any> {
@@ -150,7 +153,7 @@ export class AccountManagementService {
     try {
       let findResult = undefined;
 
-      if(ObjectIdDetecter(idOrUsername)) {
+      if (ObjectIdDetecter(idOrUsername)) {
         // is id
         findResult = await this.accountModel.findOne({
           _id: idOrUsername,
@@ -161,7 +164,7 @@ export class AccountManagementService {
           username: idOrUsername,
         }).populate('user').populate('accountState').exec();
       }
-      
+
       if (findResult) {
         return new ResponseCommon(HttpStatus.OK, true, 'SUCCESS', findResult);
       } else {
@@ -181,6 +184,29 @@ export class AccountManagementService {
     }
   }
 
+  async findOneByEmail(email: string): Promise<ResponseCommon<AccountDocument>> {
+    try {
+      const findAccount = await this.accountModel
+        .findOne()
+        .populate({
+          path: 'user',
+          match: {
+            email: email
+          }
+        })
+        .populate('accountState')
+        .exec()
+
+      if (findAccount) {
+        return new ResponseCommon(HttpStatus.OK, true, "SUCCESS", findAccount)
+      } else {
+        return new ResponseCommon(HttpStatus.NOT_FOUND, false, "ACCOUNT_NOT_FOUND");
+      }
+    } catch (error) {
+      return new ResponseCommon(HttpStatus.NOT_FOUND, false, "ACCOUNT_NOT_FOUND", error);
+    }
+  }
+
   async updateAccountById(
     id: string,
     dto: UpdateAccountManagementDto,
@@ -190,14 +216,12 @@ export class AccountManagementService {
 
   async updateAccountByUserName(
     username: string,
-    updateAccountManagementDto: UpdateAccountManagementDto,
-  ): Promise<ResponseCommon<Account>> {
+    dto: UpdateAccountManagementDto,
+  ): Promise<ResponseCommon<any>> {
     try {
-      const updateAccount = await this.accountModel.findOneAndUpdate(
-        { username },
-        { $set: updateAccountManagementDto },
-        { new: true },
-      );
+      const findAccount = await this.accountModel.findOne({ username: username });
+      findAccount.password = dto.newPassword;
+      const updateAccount = findAccount.save()
 
       if (updateAccount) {
         return new ResponseCommon(
@@ -220,6 +244,22 @@ export class AccountManagementService {
         'INTERNAL_SERVER_ERROR',
         error,
       );
+    }
+  }
+
+  async updateForgotPasswordAccount(dto: UpdatePasswordDto) {
+    try {
+      const payload = await this.authService.verifyToken(dto.token);
+
+      const updatePassword = await this.updateAccountByUserName(payload.username, { newPassword: dto.newPassword })
+
+      if (updatePassword) {
+        return new ResponseCommon(HttpStatus.OK, true, "ACCOUNT_UPDATED_SUCCESSFULLY")
+      } else {
+        return new ResponseCommon(HttpStatus.INTERNAL_SERVER_ERROR, false, "UPDATE_PASSWORD_ERROR_OCCUR")
+      }
+    } catch (error) {
+      return new ResponseCommon(HttpStatus.INTERNAL_SERVER_ERROR, false, "ERROR_ORCUR", error)
     }
   }
 

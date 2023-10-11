@@ -10,6 +10,9 @@ export class User {
   // @Prop()
   // id: string;
 
+  @Prop({ required: true })
+  email: string;
+
   @Prop({ })
   displayName: string;
 
