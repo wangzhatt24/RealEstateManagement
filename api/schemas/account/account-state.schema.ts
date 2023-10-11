@@ -6,16 +6,16 @@ export type AccountStateDocument = HydratedDocument<AccountState>
 
 @Schema()
 export class AccountState {
-  @Prop()
-  id: string;
+  // @Prop()
+  // id: string;
 
-  @Prop()
+  @Prop({ required: false })
   lockedReason: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Account' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Account', required: false })
   executor: Account;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Account'})
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Account', required: false })
   target: Account;
 }
 

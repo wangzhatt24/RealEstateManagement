@@ -1,5 +1,7 @@
 import { genderEnum } from "common/enums/gender.enum";
+import ObjectIdDetecter from "common/utils/object-id-mongoose-detec.util";
 import "dotenv/config";
+import { AccountState } from "schemas/account/account-state.schema";
 import { Account } from "schemas/account/account.schema";
 import { User } from "schemas/user.schema";
 
@@ -39,6 +41,12 @@ export const defaultUser: User = {
   account: undefined
 }
 
+export const defaultAccountState: AccountState = {
+  lockedReason: '',
+  executor: undefined,
+  target: undefined
+}
+
 export const adminUser: User = {
   displayName: process.env.SEED_ADMIN_DISPLAY_NAME,
   phoneNumber: process.env.SEED_ADMIN_PHONE_NUMBER,
@@ -48,11 +56,17 @@ export const adminUser: User = {
   account: undefined
 }
 
+export const adminAccountState: AccountState = {
+  lockedReason: '',
+  executor: undefined,
+  target: undefined
+}
 export const adminAccount: Account = {
   username: process.env.SEED_ADMIN_USERNAME,
   password: process.env.SEED_ADMIN_PASSWORD,
   isAdmin: Boolean(process.env.SEED_ADMIN_IS_ADMIN),
-  user: adminUser
+  user: adminUser,
+  accountState: adminAccountState
 }
 
 export const bcryptConfigs = {

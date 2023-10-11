@@ -14,7 +14,7 @@ export class AuthService {
   ) {}
 
   async signIn(username: string, pass: string): Promise<any> {
-    const findAccount = await this.accountService.findOneByUserName(username);
+    const findAccount = await this.accountService.findOneByIdOrUsername(username);
 
     if (findAccount.success === false) {
       return new ResponseCommon(

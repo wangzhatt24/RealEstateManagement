@@ -6,7 +6,7 @@ import { Model } from 'mongoose';
 import { InjectS3, S3 } from 'nestjs-s3';
 import { User, UserDocument } from 'schemas/user.schema';
 import { s3Configs } from 'configs/configs';
-import formatFileName from 'common/utils/format';
+import formatFileName from 'common/utils/format.util';
 import { getAvatarPrefix } from 'common/utils/s3.utils';
 import { PutObjectCommandInput } from '@aws-sdk/client-s3';
 
