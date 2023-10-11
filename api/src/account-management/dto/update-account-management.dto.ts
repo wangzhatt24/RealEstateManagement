@@ -5,5 +5,5 @@ import { IsString } from 'class-validator';
 export class UpdateAccountManagementDto {
   @ApiProperty()
   @IsString()
-  password: string;
+  newPassword: string;
 }

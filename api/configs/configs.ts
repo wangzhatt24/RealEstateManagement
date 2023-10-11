@@ -7,7 +7,8 @@ import { User } from "schemas/user.schema";
 
 export const commonConfigs = {
   nodeEnv: process.env.NODE_ENV,
-  port: parseInt(process.env.APP_PORT, 10)
+  port: parseInt(process.env.APP_PORT, 10),
+  appUrl: process.env.APP_URL
 }
 
 export const databaseConfigs = {
@@ -38,7 +39,8 @@ export const defaultUser: User = {
   phoneNumber: 'default',
   gender: genderEnum.MALE,
   avatar: null,
-  account: undefined
+  account: undefined,
+  email: 'default'
 }
 
 export const defaultAccountState: AccountState = {
@@ -53,7 +55,8 @@ export const adminUser: User = {
   gender: genderEnum.MALE,
   avatar: process.env.SEED_ADMIN_AVATAR,
   address: process.env.SEED_ADMIN_ADDRESS,
-  account: undefined
+  account: undefined,
+  email: process.env.SEED_ADMIN_EMAIL
 }
 
 export const adminAccountState: AccountState = {
@@ -73,6 +76,11 @@ export const bcryptConfigs = {
   saltRounds: Number(process.env.SALT_ROUNDS)
 }
 
+export const mailerConfigs = {
+  user: process.env.GMAIL_APP_USERNAME,
+  password: process.env.GMAIL_APP_PASSWORD
+}
+
 console.log(`
 ============================ENV===================================
 commonConfigs:   ${JSON.stringify(commonConfigs)}
@@ -81,6 +89,7 @@ avatarConfigs:   ${JSON.stringify(avatarConfigs)}
 s3Configs:       ${JSON.stringify(s3Configs)}
 jwtConstants:    ${JSON.stringify(jwtConstants)}
 adminAccount:    ${JSON.stringify(adminAccount)}
-bcryptConfigs:  ${JSON.stringify(bcryptConfigs)}
+bcryptConfigs:   ${JSON.stringify(bcryptConfigs)}
+mailerConfigs:   ${JSON.stringify(mailerConfigs)}
 ============================END_ENV===============================
 `)
