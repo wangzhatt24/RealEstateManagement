@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
-import { District } from "./district.schema";
+import { Location } from "./location.schema";
+
 
 export type WardDocument = HydratedDocument<Ward>
 
@@ -24,8 +25,8 @@ export class Ward {
   @Prop({ required: true })
   short_codename: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'District'})
-  district: District;
+  @Prop({ required: false, type: mongoose.Schema.Types.ObjectId, ref: 'Location' })
+  location: Location;
 }
 
 export const WardSchema = SchemaFactory.createForClass(Ward)

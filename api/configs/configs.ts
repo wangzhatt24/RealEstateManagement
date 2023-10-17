@@ -40,7 +40,8 @@ export const defaultUser: User = {
   gender: genderEnum.MALE,
   avatar: null,
   account: undefined,
-  email: 'default'
+  email: 'default',
+  broker: undefined
 }
 
 export const defaultAccountState: AccountState = {
@@ -56,7 +57,8 @@ export const adminUser: User = {
   avatar: process.env.SEED_ADMIN_AVATAR,
   address: process.env.SEED_ADMIN_ADDRESS,
   account: undefined,
-  email: process.env.SEED_ADMIN_EMAIL
+  email: process.env.SEED_ADMIN_EMAIL,
+  broker: undefined
 }
 
 export const adminAccountState: AccountState = {
