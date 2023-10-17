@@ -11,6 +11,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from 'common/guards/role.guard';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { MailModule } from './mail/mail.module';
+import { BrokerManagementModule } from './broker-management/broker-management.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { MailModule } from './mail/mail.module';
     UserManagementModule,
     AuthModule,
     MailModule,
+    BrokerManagementModule
   ],
   controllers: [AppController],
   providers: [

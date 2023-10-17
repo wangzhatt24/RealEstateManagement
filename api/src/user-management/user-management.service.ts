@@ -91,7 +91,7 @@ export class UserManagementService {
 
   async findAll() {
     try {
-      const findResult = await this.userModel.find().populate('account').exec();
+      const findResult = await this.userModel.find().populate(['account', 'broker']).exec();
 
       if (findResult) {
         return new ResponseCommon(HttpStatus.OK, true, 'SUCCESS', findResult);
@@ -113,7 +113,21 @@ export class UserManagementService {
   }
 
   async findOne(id: string) {
-    return await this.userModel.findById(id);
+    return (await this.userModel.findById(id)).populate({
+      path: 'account broker'
+    });
+  }
+
+  async findOneByAccountId(accountId: string): Promise<ResponseCommon<UserDocument>> {
+    try {
+      const findUserByAccountId = await this.userModel.findOne({ account: accountId }).populate({
+        path: 'broker'
+      });
+
+      return new ResponseCommon(HttpStatus.OK, true, "SUCCESS", findUserByAccountId);
+    } catch (error) {
+      return new ResponseCommon(HttpStatus.INTERNAL_SERVER_ERROR, false, "INTERNAL_SERVER_ERROR");
+    }
   }
 
   // update(id: number, updateUserManagementDto: UpdateUserManagementDto) {

@@ -1,9 +1,9 @@
 import { HttpStatus, Inject, Injectable, UnauthorizedException, forwardRef } from '@nestjs/common';
 import { CreateAccountManagementDto } from './dto/create-account-management.dto';
 import { UpdateAccountManagementDto } from './dto/update-account-management.dto';
-import { InjectModel } from '@nestjs/mongoose';
+import { InjectModel, MongooseModule } from '@nestjs/mongoose';
 import { Account, AccountDocument } from 'schemas/account/account.schema';
-import { Model, MongooseError } from 'mongoose';
+import mongoose, { Model, MongooseError } from 'mongoose';
 import { ResponseCommon } from 'common/interfaces/response-common/response.dto';
 import { User } from 'schemas/user.schema';
 import { adminAccount, defaultUser, adminUser, defaultAccountState, bcryptConfigs } from 'configs/configs';
@@ -160,12 +160,23 @@ export class AccountManagementService {
         // is id
         findResult = await this.accountModel.findOne({
           _id: idOrUsername,
-        }).populate('user').populate('accountState').exec();
+        }).populate({
+          path: 'user',
+          populate: {
+            path: 'broker',
+          }
+        }).populate('accountState').exec();
+
       } else {
         // is username
         findResult = await this.accountModel.findOne({
           username: idOrUsername,
-        }).populate('user').populate('accountState').exec();
+        }).populate({
+          path: 'user',
+          populate: {
+            path: 'broker',
+          }
+        }).populate('accountState').exec();
       }
 
       if (findResult) {
@@ -216,7 +227,7 @@ export class AccountManagementService {
       const findAccount = await this.findOneByIdOrUsername(dto.id);
 
       const account = findAccount.data;
-      
+
       if (!await bcrypt.compare(dto.oldPassword, account.password)) {
         return new ResponseCommon(HttpStatus.CONFLICT, false, "PASSWORD_INCORRECT");
       }

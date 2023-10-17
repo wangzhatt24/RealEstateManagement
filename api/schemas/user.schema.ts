@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { HydratedDocument } from "mongoose";
 import { Account } from "./account/account.schema";
 import { genderEnum } from "common/enums/gender.enum";
+import { Broker } from "./broker/broker.schema";
 
 export type UserDocument = HydratedDocument<User>
 
@@ -34,6 +35,13 @@ export class User {
     required: false,
   })
   account: Account;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Broker',
+    required: false
+  })
+  broker: Broker;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
