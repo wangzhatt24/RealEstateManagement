@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Date, HydratedDocument } from "mongoose";
 import { User } from "schemas/user.schema";
-import { Post } from "./post.schema";
+import { RealEstatePost } from "./post.schema";
 
 export type UserSavePostsDocument = HydratedDocument<UserSavePosts>
 
@@ -14,7 +14,7 @@ export class UserSavePosts {
   user: User;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true })
-  post: Post;
+  post: RealEstatePost;
 }
 
 export const UserSavePostsSchema = SchemaFactory.createForClass(UserSavePosts)

@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { RealEstateType } from "common/enums/real-estate-type.enum";
 import { saleOrRental } from "common/enums/sale-or-rental.enum";
 import mongoose, { HydratedDocument } from "mongoose";
-import { Post } from "./post.schema";
+import { RealEstatePost } from "./post.schema";
 
 export type ContactPostDocument = HydratedDocument<ContactPost>
 
@@ -24,7 +24,7 @@ export class ContactPost {
   phoneNumber: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Post' })
-  post: Post;
+  post: RealEstatePost;
 }
 
 export const ContactPostSchema = SchemaFactory.createForClass(ContactPost)

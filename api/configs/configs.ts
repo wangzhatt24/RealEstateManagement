@@ -1,8 +1,11 @@
 import { genderEnum } from "common/enums/gender.enum";
+import { PostStateEnum } from "common/enums/post-state.enum";
 import ObjectIdDetecter from "common/utils/object-id-mongoose-detec.util";
 import "dotenv/config";
 import { AccountState } from "schemas/account/account-state.schema";
 import { Account } from "schemas/account/account.schema";
+import { PostState } from "schemas/post/post-state.schema";
+import { RealEstatePost } from "schemas/post/post.schema";
 import { User } from "schemas/user.schema";
 
 export const commonConfigs = {
@@ -18,6 +21,11 @@ export const databaseConfigs = {
 export const avatarConfigs = {
   maxSize: Number(process.env.AVATAR_MAX_SIZE),
   fileTypeRegex: new RegExp(process.env.AVATAR_TYPES_REGEX)
+}
+
+export const realEstateImagesConfigs = {
+  maxSize: Number(process.env.REAL_ESTATE_IMAGES_MAX_SIZE),
+  fileTypeRegex: new RegExp(process.env.REAL_ESTATE_IMAGES_TYPES_REGEX)
 }
 
 export const s3Configs = {
@@ -41,7 +49,14 @@ export const defaultUser: User = {
   avatar: null,
   account: undefined,
   email: 'default',
-  broker: undefined
+  broker: undefined,
+  realEstatePosts: undefined,
+  userSavePosts: undefined
+}
+
+export const defaultPostState: PostState = {
+  state: PostStateEnum.New,
+  post: undefined
 }
 
 export const defaultAccountState: AccountState = {
@@ -58,7 +73,9 @@ export const adminUser: User = {
   address: process.env.SEED_ADMIN_ADDRESS,
   account: undefined,
   email: process.env.SEED_ADMIN_EMAIL,
-  broker: undefined
+  broker: undefined,
+  realEstatePosts: undefined,
+  userSavePosts: undefined
 }
 
 export const adminAccountState: AccountState = {
@@ -66,6 +83,7 @@ export const adminAccountState: AccountState = {
   executor: undefined,
   target: undefined
 }
+
 export const adminAccount: Account = {
   username: process.env.SEED_ADMIN_USERNAME,
   password: process.env.SEED_ADMIN_PASSWORD,
@@ -93,5 +111,6 @@ jwtConstants:    ${JSON.stringify(jwtConstants)}
 adminAccount:    ${JSON.stringify(adminAccount)}
 bcryptConfigs:   ${JSON.stringify(bcryptConfigs)}
 mailerConfigs:   ${JSON.stringify(mailerConfigs)}
+defautlPostState:${JSON.stringify(defaultPostState)}
 ============================END_ENV===============================
 `)

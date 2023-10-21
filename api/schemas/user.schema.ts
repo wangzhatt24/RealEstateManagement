@@ -3,6 +3,8 @@ import mongoose, { HydratedDocument } from "mongoose";
 import { Account } from "./account/account.schema";
 import { genderEnum } from "common/enums/gender.enum";
 import { Broker } from "./broker/broker.schema";
+import { RealEstatePost } from "./post/post.schema";
+import { UserSavePosts } from "./post/user-save-posts.schema";
 
 export type UserDocument = HydratedDocument<User>
 
@@ -42,6 +44,22 @@ export class User {
     required: false
   })
   broker: Broker;
+
+  @Prop({
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "RealEstatePost",
+    required: false,
+    default: []
+  })
+  realEstatePosts: RealEstatePost[];
+
+  @Prop({
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "UserSavePosts",
+    required: false,
+    default: []
+  })
+  userSavePosts: UserSavePosts[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
