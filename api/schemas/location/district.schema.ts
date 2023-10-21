@@ -26,7 +26,7 @@ export class District {
   short_codename: string;
 
   @Prop({ required: false, type: mongoose.Schema.Types.ObjectId, ref: 'Location' })
-  localtion: Location;
+  location: Location;
 }
 
 export const DistrictSchema = SchemaFactory.createForClass(District)

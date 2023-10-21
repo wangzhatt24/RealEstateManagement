@@ -148,7 +148,7 @@ export class BrokerManagementService {
     try {
       const deleteRelatedBrokerageFields = await this.brokerageFieldModel.findOneAndDelete({ broker: findBroker });
       const deleteRelatedProvinceOrCity = await this.provinceOrCityModel.findOneAndDelete({ localtion: deleteRelatedBrokerageFields });
-      const deleteRelatedDistrict = await this.districtModel.findOneAndDelete({ localtion: deleteRelatedBrokerageFields });
+      const deleteRelatedDistrict = await this.districtModel.findOneAndDelete({ location: deleteRelatedBrokerageFields });
       const deleteRelatedWard = await this.wardModel.findOneAndDelete({ localtion: deleteRelatedBrokerageFields });
 
       return new ResponseCommon(HttpStatus.OK, true, "SUCCESS");
