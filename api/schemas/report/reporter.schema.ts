@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Date, HydratedDocument } from "mongoose";
 import { User } from "schemas/user.schema";
+import { Report } from "./report.schema";
 
 export type ReporterDocument = HydratedDocument<Reporter>
 

@@ -13,6 +13,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
 import { MailModule } from './mail/mail.module';
 import { BrokerManagementModule } from './broker-management/broker-management.module';
 import { RealEstatePostManangementModule } from './real-estate-post-manangement/real-estate-post-manangement.module';
+import { ReportManagementModule } from './report-management/report-management.module';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { RealEstatePostManangementModule } from './real-estate-post-manangement/
     AuthModule,
     MailModule,
     BrokerManagementModule,
-    RealEstatePostManangementModule
+    RealEstatePostManangementModule,
+    ReportManagementModule
   ],
   controllers: [AppController],
   providers: [
