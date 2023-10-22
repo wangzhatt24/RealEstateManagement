@@ -31,6 +31,14 @@ export class RealEstatePost {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'ContactPost', required: false })
   contactPost: ContactPost;
+
+  @Prop({
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Report',
+    required: false,
+    default: []
+  })
+  reports: Report[];
 }
 
 export const PostSchema = SchemaFactory.createForClass(RealEstatePost)

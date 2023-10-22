@@ -5,6 +5,7 @@ import { genderEnum } from "common/enums/gender.enum";
 import { Broker } from "./broker/broker.schema";
 import { RealEstatePost } from "./post/post.schema";
 import { UserSavePosts } from "./post/user-save-posts.schema";
+import { Report } from "./report/report.schema";
 
 export type UserDocument = HydratedDocument<User>
 
@@ -60,6 +61,14 @@ export class User {
     default: []
   })
   userSavePosts: UserSavePosts[];
+
+  @Prop({
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Report",
+    required: false,
+    default: []
+  })
+  reports: Report[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

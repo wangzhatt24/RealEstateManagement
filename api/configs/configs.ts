@@ -1,11 +1,11 @@
 import { genderEnum } from "common/enums/gender.enum";
 import { PostStateEnum } from "common/enums/post-state.enum";
-import ObjectIdDetecter from "common/utils/object-id-mongoose-detec.util";
+import { ReportStateEnum } from "common/enums/report-state.enum";
 import "dotenv/config";
 import { AccountState } from "schemas/account/account-state.schema";
 import { Account } from "schemas/account/account.schema";
 import { PostState } from "schemas/post/post-state.schema";
-import { RealEstatePost } from "schemas/post/post.schema";
+import { ReportState } from "schemas/report/report-state.schema";
 import { User } from "schemas/user.schema";
 
 export const commonConfigs = {
@@ -26,6 +26,11 @@ export const avatarConfigs = {
 export const realEstateImagesConfigs = {
   maxSize: Number(process.env.REAL_ESTATE_IMAGES_MAX_SIZE),
   fileTypeRegex: new RegExp(process.env.REAL_ESTATE_IMAGES_TYPES_REGEX)
+}
+
+export const defaultReportState: ReportState = {
+  state: ReportStateEnum.New,
+  report: undefined
 }
 
 export const s3Configs = {
@@ -51,7 +56,8 @@ export const defaultUser: User = {
   email: 'default',
   broker: undefined,
   realEstatePosts: undefined,
-  userSavePosts: undefined
+  userSavePosts: undefined,
+  reports: undefined
 }
 
 export const defaultPostState: PostState = {
@@ -75,7 +81,8 @@ export const adminUser: User = {
   email: process.env.SEED_ADMIN_EMAIL,
   broker: undefined,
   realEstatePosts: undefined,
-  userSavePosts: undefined
+  userSavePosts: undefined,
+  reports: undefined
 }
 
 export const adminAccountState: AccountState = {
