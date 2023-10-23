@@ -14,6 +14,7 @@ import { MailModule } from './mail/mail.module';
 import { BrokerManagementModule } from './broker-management/broker-management.module';
 import { RealEstatePostManangementModule } from './real-estate-post-manangement/real-estate-post-manangement.module';
 import { ReportManagementModule } from './report-management/report-management.module';
+import { NotificationManangementModule } from './notification-manangement/notification-manangement.module';
 
 @Module({
   imports: [
@@ -33,7 +34,8 @@ import { ReportManagementModule } from './report-management/report-management.mo
     MailModule,
     BrokerManagementModule,
     RealEstatePostManangementModule,
-    ReportManagementModule
+    ReportManagementModule,
+    NotificationManangementModule
   ],
   controllers: [AppController],
   providers: [
