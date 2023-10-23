@@ -57,7 +57,8 @@ export const defaultUser: User = {
   broker: undefined,
   realEstatePosts: undefined,
   userSavePosts: undefined,
-  reports: undefined
+  reports: undefined,
+  notifications: undefined
 }
 
 export const defaultPostState: PostState = {
@@ -82,7 +83,8 @@ export const adminUser: User = {
   broker: undefined,
   realEstatePosts: undefined,
   userSavePosts: undefined,
-  reports: undefined
+  reports: undefined,
+  notifications: undefined
 }
 
 export const adminAccountState: AccountState = {

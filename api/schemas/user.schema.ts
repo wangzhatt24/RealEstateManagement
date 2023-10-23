@@ -6,6 +6,7 @@ import { Broker } from "./broker/broker.schema";
 import { RealEstatePost } from "./post/post.schema";
 import { UserSavePosts } from "./post/user-save-posts.schema";
 import { Report } from "./report/report.schema";
+import { Notification } from "./notification/notification.schema";
 
 export type UserDocument = HydratedDocument<User>
 
@@ -69,6 +70,14 @@ export class User {
     default: []
   })
   reports: Report[];
+
+  @Prop({
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Notification",
+    required: false,
+    default: []
+  })
+  notifications: Notification[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

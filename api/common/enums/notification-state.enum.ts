@@ -1,4 +1,4 @@
-export enum notificationStateEnum {
+export enum NotificationStateEnum {
   New = "New",
   Readed = "Readed"
 }

@@ -121,7 +121,7 @@ export class UserManagementService {
   async findOneByAccountId(accountId: string): Promise<ResponseCommon<UserDocument>> {
     try {
       const findUserByAccountId = await this.userModel.findOne({ account: accountId }).populate({
-        path: 'broker realEstatePosts'
+        path: 'broker realEstatePosts notifications'
       });
 
       return new ResponseCommon(HttpStatus.OK, true, "SUCCESS", findUserByAccountId);
