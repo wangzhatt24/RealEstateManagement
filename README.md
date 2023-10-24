@@ -1,4 +1,6 @@
+
 # RealEstateManagement
+
 Kho chứa mã chính thức của dự án Quản lý thông tin bất động sản trên nền tảng Amazon Web Services
 <hr />
 
@@ -11,15 +13,28 @@ Phần issue có thể dùng để giao việc, đặt câu hỏi
 Ví dụ: A giao việc cho B, thì viết nội dung và gán cho B( sử dụng assignees) và dùng label là feature
 
 Ta có ví dụ sau: Wangzhatt24 giao việc cho chính mình rằng hãy tạo một card.model.js
-Khi thao tác giao việc bằng issues xong thì tiêu đề issues trong github có dạng như sau: wangzhatt24 - create-card.model.js file #1, có thể hiểu là Ai làm? Làm gì? #1 là số để tham chiếu, hãy để ý điều này
+Khi thao tác giao việc bằng issues xong thì tiêu đề issues trong github có dạng như sau: 
 
-Chúng ta sẽ tạo một branch trong git để giải quyết issue này: git checkout -b feature/1-add-card-model.js develop
+   wangzhatt24 - create-card.model.js file #1
+
+có thể hiểu là Ai làm? Làm gì? #1 là số để tham chiếu, hãy để ý điều này
+
+Chúng ta sẽ tạo một branch trong git để giải quyết issue này: 
+
+    git checkout -b feature/1-add-card-model.js develop
+
 Có nghĩa là từ nhánh develop checkout ra một nhánh để giải quyết tính năng yêu cầu
 
-Chú ý cái #1 mình sẽ tạo tương tự trong git là label/#số tham chiếu-nội dung yêu cầu
+Chú ý cái #1 mình sẽ tạo tương tự trong git là 
+
+    label/#số tham chiếu-nội dung yêu cầu
 
 Sau đó chúng ta sẽ làm việc được giao, sau đó git status và git add để theo dõi như thường
-Nhưng phần commit thì hãy như sau: git commit -m "#1 - ai làm - làm gì?"
+
+Nhưng phần commit thì hãy như sau: 
+
+    git commit -m "#1 - ai làm - làm gì?"
+
 Có thể thấy #1 để tham chiếu tới issues cụ thể, điều này là quan trọng, kiểm tra phần issues đều có tham chiếu và thông tin đầy đủ về người làm, issues nào.
 
 Nhớ là git push origin tên nhánh để đẩy lên github nhé
@@ -33,10 +48,10 @@ Người có trách nhiệm merge sẽ merge và để lại comment
 Giờ dưới local bạn sẽ checkout qua nhánh develop và pull code từ remote về git pull origin develop
 
 Sau đó chúng ta có thể muốn release, ta sẽ tạo một nhánh release từ nhánh develop
-git checkout -b release-1.1.0 develop
-git tag "v1.1.0"
 
-git push --tags
+    git checkout -b release-1.1.0 develop
+    git tag "v1.1.0"
+    git push --tags
 
 Kiểm tra trên github sẽ có tags
 
@@ -46,44 +61,44 @@ Sau đó git push origin release-1.1.0 để đẩy code lên
 
 Từ release chúng ta sẽ tạo pull request vào nhánh master( hoặc main) 
 
-Sau khi gộp code xong, chúng ta ở local master( hoặc main) pull về: git pull origin master
+Sau khi gộp code xong, chúng ta ở local master( hoặc main) pull về: 
 
-Tóm tắt lại những gì đã đi qua: Từ nhánh develop tạo fearture #1-create-card-model, gộp lại vào develop, từ develop tạo release, pull code develop qua release, từ release pull qua master
+    git pull origin master
+
+Tóm tắt lại những gì đã đi qua: 
+
+ - Từ nhánh develop tạo fearture #1-create-card-model
+ -  Gộp lại vào develop
+ - Từ develop tạo release
+ - Pull code develop qua release
+ - Từ release pull qua master
 
 Bây giờ ta sẽ xóa nhánh release và nhánh fearture ở local và remote
-remote: git push origin -d release-1.1.0
-local: git branch -d release-1.1.0 
-remote: git push origin -d fearture/1-create-card-model.js 
-local: git branch -d fearture/1-create-card-model.js 
+
+    remote: git push origin -d release-1.1.0
+    local: git branch -d release-1.1.0 
+    remote: git push origin -d fearture/1-create-card-model.js 
+    local: git branch -d fearture/1-create-card-model.js 
 
 Nếu có lỗi ở production chúng ta sẽ hot fix bằng cách tạo nhánh hotfix rồi đổ về nhánh develop hoặc fix ở đó rồi pull request qua master luôn
 
-git checkout -b hotfix
-
-git add, git commit -m "#4 - fix some"
-
-git push origin hotfix
-
-Tạo pull request vào master
-
-Sau đó checkout master và pull từ remote về
-
-Sau đó xóa các branch đã xong
+    git checkout -b hotfix
+    git add, git commit -m "#4 - fix some"
+    git push origin hotfix
+    Tạo pull request vào master
+    Sau đó checkout master và pull từ remote về
+    Sau đó xóa các branch đã xong
 
 2. Configuration
 
 Đầu tiên câu hỏi đặt ra là cấu hình ứng dụng chạy trên cổng nào, môi trường là gì, nếu cấu hình thêm database, aws s3,... thì nên cấu hình như thế nào?
-
 NestJs đề xuất [cách cấu hình](https://docs.nestjs.com/techniques/configuration)
-
 Thế nhưng nó quá khá phức tạp và không đáp ứng được các nhu cầu cơ bản trên
-
 Ví dụ: ![Khó để cấu hình cổng đơn giản](./assets/images/main-dotenv-questioningioning.png)
 ![NestJs hướng dẫn cấu hình mongodb](./assets/images/how-nestjs-config-mongodb.png)
 
 Nên tôi quyết định sử dụng cách cũ và dễ dàng tiếp cận hơn:
 [Đọc thêm](https://medium.com/@datails/nestjs-keep-it-simple-stupid-4101d8bdf59c)
-
 Tôi tạo một thư mục và file như sau: configs/configs.ts
 Trong đó dùng dotenv để đọc file cấu hình đơn giản như sau:
 
