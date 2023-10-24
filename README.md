@@ -107,3 +107,46 @@ Trong đó dùng dotenv để đọc file cấu hình đơn giản như sau:
 Sau đó cấu hình cơ bản Swagger
 
 ![Cơ bản swagger](./assets/images/swagger-configs.png)
+
+3. Tổng quan tài liệu:
+
+Vì chúng ta sử dụng swagger nên những mô tả về yêu cầu đầu ra đầu vào cũng khá đầy đủ, tôi chỉ viết những phần sử dụng mà tôi nghĩ là sẽ mơ hồ nếu thiếu
+
+Cách chạy api:
+**Phải có file env( Liên hệ backend để lấy file mẫu)**
+
+Đảm bảo terminal ở trong thư mục api
+
+Sau đó cài đặt phụ thuộc bằng
+
+    npm install
+ 
+ Khi đã cài đặt các phụ thuộc ta chạy lệnh sau:
+
+    npm run start:debug
+   
+  Hoặc:  
+
+    npm run start:dev
+
+Sau đó nhìn vào màn hình console sẽ trả về đường link để truy cập đến trang tài liệu api( swagger)
+
+Account Management
+
+![Account Management](./assets/images/accmgt.png)
+
+Authentication
+
+![Authentication](./assets/images/authen.png)
+
+Với api này thì chúng ta sẽ dùng đăng nhập trước, điền tài khoản mật khẩu và chạy thì nếu đúng hệ thống sẽ trả về cho chúng ta một access_token, copy và dán token này vào cái biểu tượng ổ khóa tức là đã đăng nhập.
+
+![User Management](./assets/images/user.png)
+
+![Broker Management](./assets/images/broker.png)
+
+![Post Management](./assets/images/post.png)
+
+![Report Management](./assets/images/report.png)
+
+![Notification Management](./assets/images/noti.png)

@@ -10,14 +10,14 @@ import { AccountManagementService } from './account-management.service';
 import { CreateAccountManagementDto } from './dto/create-account-management.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Public } from 'common/decorators/public.decorator';
-import { Roles } from 'common/decorators/role.decorator';
-import { Role } from 'common/enums/role.enum';
 import UpdatePasswordDto from './dto/update-password.dto';
 import { UpdatePasswordByAccountIdDto } from './dto/update-password-by-id.dto';
 import { lockAccountDto } from './dto/lock-account.dto';
 import { CurrentAccount } from 'common/decorators/current-account.decorator';
 import AccountPayload from 'common/interfaces/account-payload/account.payload';
 import { UnlockAccountDto } from './dto/unlock-account.dto';
+import { Roles } from 'common/decorators/role.decorator';
+import { Role } from 'common/enums/role.enum';
 
 @ApiBearerAuth()
 @ApiTags('Account Management')
@@ -40,7 +40,7 @@ export class AccountManagementController {
   }
 
   @Get('all-account')
-  // @Roles(Role.Admin)
+  @Roles(Role.Admin)
   findAll() {
     return this.accountManagementService.findAll();
   }
