@@ -13,6 +13,9 @@ import { AuthService } from 'src/auth/auth.service';
 import UpdatePasswordDto from './dto/update-password.dto';
 import { UpdatePasswordByAccountIdDto } from './dto/update-password-by-id.dto';
 import * as bcrypt from 'bcrypt'
+import { lockAccountDto } from './dto/lock-account.dto';
+import AccountPayload from 'common/interfaces/account-payload/account.payload';
+import { UnlockAccountDto } from './dto/unlock-account.dto';
 
 
 @Injectable()
@@ -294,6 +297,68 @@ export class AccountManagementService {
     } catch (error) {
       return new ResponseCommon(HttpStatus.INTERNAL_SERVER_ERROR, false, "ERROR_ORCUR", error)
     }
+  }
+
+  async lockAccount(
+    dto: lockAccountDto,
+    currentAccount: AccountPayload
+  ) {
+    const executorAccount = await this.accountModel.findOne({ _id: currentAccount.accountId });
+    const targetAccount = await this.accountModel.findOne({ _id: dto.targetId }).populate('accountState');
+
+    if (!this.checkPessmisionLock(executorAccount, targetAccount)) {
+      return new ResponseCommon(HttpStatus.FORBIDDEN, false, "PERMISSION_DENIED");
+    }
+
+    const updateAccount = await this.accountStateModel.findOneAndUpdate({
+      _id: targetAccount.accountState
+    }, {
+      $set: {
+        lockedReason: dto.lockedReason,
+        executor: executorAccount,
+        target: targetAccount
+      }
+    }, { new: true })
+
+
+    return new ResponseCommon(HttpStatus.OK, true, "SUCCESS", updateAccount);
+  }
+
+  async unLockAccount(
+    dto: UnlockAccountDto,
+    currentAccount: AccountPayload
+  ) {
+    const executorAccount = await this.accountModel.findOne({ _id: currentAccount.accountId });
+    const targetAccount = await this.accountModel.findOne({ _id: dto.targetId }).populate('accountState');
+
+    if (!this.checkPessmisionLock(executorAccount, targetAccount)) {
+      return new ResponseCommon(HttpStatus.FORBIDDEN, false, "PERMISSION_DENIED");
+    }
+
+    await this.accountStateModel.updateOne({
+      _id: targetAccount.accountState
+    }, {
+      $set: {
+        lockedReason: "",
+        executor: executorAccount,
+        target: targetAccount
+      }
+    })
+
+    return new ResponseCommon(HttpStatus.OK, true, "ACCOUNT_UNLOCKED_SUCCESSFULLY");
+  }
+
+  checkPessmisionLock(
+    currentAccount: AccountDocument,
+    targetAccount: AccountDocument
+  ) {
+    // mở khóa: chỉ chủ account và admin
+    // khóa: tương tự như trên
+    if (currentAccount.isAdmin === true) {
+      return true;
+    }
+
+    return targetAccount.id === currentAccount.id
   }
 
   async removeAllAccount() {

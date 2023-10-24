@@ -14,8 +14,11 @@ import { Roles } from 'common/decorators/role.decorator';
 import { Role } from 'common/enums/role.enum';
 import UpdatePasswordDto from './dto/update-password.dto';
 import { UpdatePasswordByAccountIdDto } from './dto/update-password-by-id.dto';
+import { lockAccountDto } from './dto/lock-account.dto';
+import { CurrentAccount } from 'common/decorators/current-account.decorator';
+import AccountPayload from 'common/interfaces/account-payload/account.payload';
+import { UnlockAccountDto } from './dto/unlock-account.dto';
 
-@Public()
 @ApiBearerAuth()
 @ApiTags('Account Management')
 @Controller('account-management')
@@ -58,10 +61,21 @@ export class AccountManagementController {
     return this.accountManagementService.updateForgotPasswordAccount(dto)
   }
 
-  // @Post('lock-account/:id')
-  // lockAccount(@Param('id') id: string) {
-  //   // return this.accountManagementService.(id);
-  // }
+  @Post('lock-account/')
+  lockAccount(
+    @Body() lockAccountDto: lockAccountDto,
+    @CurrentAccount() currentAccount: AccountPayload
+  ) {
+    return this.accountManagementService.lockAccount(lockAccountDto, currentAccount);
+  }
+
+  @Post('unlock-account')
+  unlockAccount(
+    @Body() dto: UnlockAccountDto,
+    @CurrentAccount() currentAccount: AccountPayload
+  ) {
+    return this.accountManagementService.unLockAccount(dto, currentAccount);
+  }
 
   @Get('/remove-all-account')
   removeAllAccount() {

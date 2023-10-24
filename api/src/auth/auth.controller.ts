@@ -13,6 +13,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Public } from 'common/decorators/public.decorator';
 import { CurrentAccount } from 'common/decorators/current-account.decorator';
 import ForgotPasswordDto from './dto/forgot-password.dto';
+import AccountPayload from 'common/interfaces/account-payload/account.payload';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -33,7 +34,7 @@ export class AuthController {
 
   @ApiBearerAuth()
   @Get('account-detailt')
-  getProfile(@CurrentAccount() account) {
+  getProfile(@CurrentAccount() account: AccountPayload) {
     return account;
   }
 }
