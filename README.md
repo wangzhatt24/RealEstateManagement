@@ -1,135 +1,136 @@
+Đọc tiếng việt(Vietnamese version) [tại đây](./README_VN.md)!
 
-# RealEstateManagement
+#RealEstateManagement
 
-Kho chứa mã chính thức của dự án Quản lý thông tin bất động sản trên nền tảng Amazon Web Services
+Official code repository of the Real Estate Information Management project on the Amazon Web Services platform
 <hr />
 
-1. Quy định và quy trình về việc sử dụng git và github đối với kho mã
+1. Regulations and procedures on using git and github for code repositories
 
-Về tổng quan chúng ta sẽ không trực tiếp code hoặc đẩy commit lên nhánh master thay vào đó tạo ra nhánh develop và từ nhánh này phát triển những tính năng(tạo các nhánh tính năng) hoặc sửa lỗi,... sau đó thì gộp lại vào nhánh develop, từ nhánh develop chúng ta sẽ đổ qua nhánh release nếu cần release, nếu nhánh release có lỗi thì đổ ngược lại code về develop để fix, nếu ổn thì từ release đẩy code qua production, nếu production có lỗi thì tạo nhánh hotfix, hotfix đổ code về develop và lặp lại.
+In general, we will not directly code or push commits to the master branch. Instead, we will create a develop branch and from this branch develop features (create feature branches) or fix bugs,... then merge. back to the develop branch, from the develop branch we will move to the release branch if we need to release it, if the release branch has an error then we will put the code back into develop to fix it, if it's ok then from release push the code to production, if production has an error then create it. hotfix branch, hotfix dumps code to develop and repeats.
 
-Phần issue có thể dùng để giao việc, đặt câu hỏi
+The issue section can be used to assign tasks and ask questions
 
-Ví dụ: A giao việc cho B, thì viết nội dung và gán cho B( sử dụng assignees) và dùng label là feature
+For example: A assigns a job to B, then write the content and assign it to B (using assignees) and use the label as feature
 
-Ta có ví dụ sau: Wangzhatt24 giao việc cho chính mình rằng hãy tạo một card.model.js
-Khi thao tác giao việc bằng issues xong thì tiêu đề issues trong github có dạng như sau: 
+We have the following example: Wangzhatt24 assigned himself a task to create a card.model.js
+When assigning tasks with issues is completed, the issues title in github will look like this:
 
-   wangzhatt24 - create-card.model.js file #1
+ wangzhatt24 - create-card.model.js file #1
 
-có thể hiểu là Ai làm? Làm gì? #1 là số để tham chiếu, hãy để ý điều này
+can be understood as Who did it? Doing what? #1 is the reference number, keep an eye on this
 
-Chúng ta sẽ tạo một branch trong git để giải quyết issue này: 
+We will create a branch in git to resolve this issue:
 
-    git checkout -b feature/1-add-card-model.js develop
+ git checkout -b feature/1-add-card-model.js develop
 
-Có nghĩa là từ nhánh develop checkout ra một nhánh để giải quyết tính năng yêu cầu
+This means that from the develop branch checkout out a branch to resolve the requested feature
 
-Chú ý cái #1 mình sẽ tạo tương tự trong git là 
+Note that #1 I will create similarly in git is
 
-    label/#số tham chiếu-nội dung yêu cầu
+ label/#request-content-reference number
 
-Sau đó chúng ta sẽ làm việc được giao, sau đó git status và git add để theo dõi như thường
+After that we will do the assigned work, then git status and git add to track as usual
 
-Nhưng phần commit thì hãy như sau: 
+But the commit part should be like this:
 
-    git commit -m "#1 - ai làm - làm gì?"
+ git commit -m "#1 - who does - what?"
 
-Có thể thấy #1 để tham chiếu tới issues cụ thể, điều này là quan trọng, kiểm tra phần issues đều có tham chiếu và thông tin đầy đủ về người làm, issues nào.
+You can see #1 refers to specific issues, this is important, check the issues section to have references and complete information about who worked and which issue.
 
-Nhớ là git push origin tên nhánh để đẩy lên github nhé
+Remember git push origin is the branch name to push to github
 
-Sau đó chúng ta lên github để tạo một pull request để gộp nhánh mà chúng ta đang phát triển(fearture #1) vào nhánh develop, nhớ ghi trong pull request phải có #1 để tham chiếu tới nó nhé
+Then we go to github to create a pull request to merge the branch we are developing (fearture #1) into the develop branch, remember to write in the pull request there must be #1 to refer to it.
 
-Tạo pull xong thì người quản lý có thể gán người review code, gán labels,...
+After creating a pull, the manager can assign code reviewers, assign labels,...
 
-Người có trách nhiệm merge sẽ merge và để lại comment
+The person responsible for merging will merge and leave a comment
 
-Giờ dưới local bạn sẽ checkout qua nhánh develop và pull code từ remote về git pull origin develop
+Now under local you will checkout through the develop branch and pull code from remote to git pull origin develop
 
-Sau đó chúng ta có thể muốn release, ta sẽ tạo một nhánh release từ nhánh develop
+Then we may want to release, we will create a release branch from the develop branch
 
-    git checkout -b release-1.1.0 develop
-    git tag "v1.1.0"
-    git push --tags
+ git checkout -b release-1.1.0 develop
+ git tag "v1.1.0"
+ git push --tags
 
-Kiểm tra trên github sẽ có tags
+Check on github there will be tags
 
-Sau đó git merge develop để gộp code nhánh develop qua
+Then git merge develop to merge the develop branch code
 
-Sau đó git push origin release-1.1.0 để đẩy code lên
+Then git push origin release-1.1.0 to push the code up
 
-Từ release chúng ta sẽ tạo pull request vào nhánh master( hoặc main) 
+From release we will create a pull request to the master (or main) branch.
 
-Sau khi gộp code xong, chúng ta ở local master( hoặc main) pull về: 
+After combining the code, we can pull from the local master (or main):
 
-    git pull origin master
+ git pull origin master
 
-Tóm tắt lại những gì đã đi qua: 
+Summary of what happened:
 
- - Từ nhánh develop tạo fearture #1-create-card-model
- -  Gộp lại vào develop
- - Từ develop tạo release
- - Pull code develop qua release
- - Từ release pull qua master
+ - From the develop branch create fearture #1-create-card-model
+ - Merge into develop
+ - From develop create release
+ - Pull code develop through release
+ - From release pull to master
 
-Bây giờ ta sẽ xóa nhánh release và nhánh fearture ở local và remote
+Now we will delete the release branch and fearture branch in local and remote
 
-    remote: git push origin -d release-1.1.0
-    local: git branch -d release-1.1.0 
-    remote: git push origin -d fearture/1-create-card-model.js 
-    local: git branch -d fearture/1-create-card-model.js 
+ remote: git push origin -d release-1.1.0
+ local: git branch -d release-1.1.0
+ remote: git push origin -d fearture/1-create-card-model.js
+ local: git branch -d fearture/1-create-card-model.js
 
-Nếu có lỗi ở production chúng ta sẽ hot fix bằng cách tạo nhánh hotfix rồi đổ về nhánh develop hoặc fix ở đó rồi pull request qua master luôn
+If there is an error in production, we will hot fix it by creating a hotfix branch and then moving it to the develop branch or fix it there and then pull the request to master.
 
-    git checkout -b hotfix
-    git add, git commit -m "#4 - fix some"
-    git push origin hotfix
-    Tạo pull request vào master
-    Sau đó checkout master và pull từ remote về
-    Sau đó xóa các branch đã xong
+ git checkout -b hotfix
+ git add, git commit -m "#4 - fix some"
+ git push origin hotfix
+ Create a pull request to master
+ Then checkout master and pull from remote
+ Then delete the completed branches
 
 2. Configuration
 
-Đầu tiên câu hỏi đặt ra là cấu hình ứng dụng chạy trên cổng nào, môi trường là gì, nếu cấu hình thêm database, aws s3,... thì nên cấu hình như thế nào?
-NestJs đề xuất [cách cấu hình](https://docs.nestjs.com/techniques/configuration)
-Thế nhưng nó quá khá phức tạp và không đáp ứng được các nhu cầu cơ bản trên
-Ví dụ: ![Khó để cấu hình cổng đơn giản](./assets/images/main-dotenv-questioningioning.png)
-![NestJs hướng dẫn cấu hình mongodb](./assets/images/how-nestjs-config-mongodb.png)
+The first question is to configure which port the application runs on, what is the environment, if you configure additional database, aws s3,... how should you configure it?
+NestJs recommends [how to configure](https://docs.nestjs.com/techniques/configuration)
+However, it is too complicated and does not meet the above basic needs
+For example: ![Difficult to configure simple port](./assets/images/main-dotenv-questioningioning.png)
+![NestJs instructions for configuring mongodb](./assets/images/how-nestjs-config-mongodb.png)
 
-Nên tôi quyết định sử dụng cách cũ và dễ dàng tiếp cận hơn:
-[Đọc thêm](https://medium.com/@datails/nestjs-keep-it-simple-stupid-4101d8bdf59c)
-Tôi tạo một thư mục và file như sau: configs/configs.ts
-Trong đó dùng dotenv để đọc file cấu hình đơn giản như sau:
+So I decided to use the old and more accessible way:
+[Read more](https://medium.com/@datails/nestjs-keep-it-simple-stupid-4101d8bdf59c)
+I created a folder and file as follows: configs/configs.ts
+Use dotenv to read a simple configuration file as follows:
 
-![Cấu hình đơn giản](./assets/images/how-i-configed-dotenv.png)
+![Simple configuration](./assets/images/how-i-configed-dotenv.png)
 
-Sau đó cấu hình cơ bản Swagger
+Then basic Swagger configuration
 
-![Cơ bản swagger](./assets/images/swagger-configs.png)
+![Basic swagger](./assets/images/swagger-configs.png)
 
-3. Tổng quan tài liệu:
+3. Document overview:
 
-Vì chúng ta sử dụng swagger nên những mô tả về yêu cầu đầu ra đầu vào cũng khá đầy đủ, tôi chỉ viết những phần sử dụng mà tôi nghĩ là sẽ mơ hồ nếu thiếu
+Since we are using swagger, the descriptions of input and output requirements are quite complete. I only write the usage parts that I think would be vague if they were missing.
 
-Cách chạy api:
-**Phải có file env( Liên hệ backend để lấy file mẫu)**
+How to run API:
+**Must have env file (Contact backend to get sample file)**
 
-Đảm bảo terminal ở trong thư mục api
+Make sure the terminal is in the api directory
 
-Sau đó cài đặt phụ thuộc bằng
+Then install dependencies using
 
-    npm install
- 
- Khi đã cài đặt các phụ thuộc ta chạy lệnh sau:
+ npm install
 
-    npm run start:debug
-   
-  Hoặc:  
+ Once we have installed the dependencies, run the following command:
 
-    npm run start:dev
+ npm run start:debug
 
-Sau đó nhìn vào màn hình console sẽ trả về đường link để truy cập đến trang tài liệu api( swagger)
+ Or:
+
+ npm run start:dev
+
+Then looking at the console screen will return the link to access trang API documentation (swagger)
 
 Account Management
 
@@ -139,7 +140,7 @@ Authentication
 
 ![Authentication](./assets/images/authen.png)
 
-Với api này thì chúng ta sẽ dùng đăng nhập trước, điền tài khoản mật khẩu và chạy thì nếu đúng hệ thống sẽ trả về cho chúng ta một access_token, copy và dán token này vào cái biểu tượng ổ khóa tức là đã đăng nhập.
+With this api, we will use to log in first, fill in the account password and run. If it is correct, the system will return us an access_token, copy and paste this token into the lock icon, meaning we are logged in.
 
 ![User Management](./assets/images/user.png)
 
